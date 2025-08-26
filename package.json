@@ -1,6 +1,6 @@
 {
   "name": "@ipriskify/fingerprintx",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "A high-accuracy, low-latency browser fingerprinting library written in TypeScript.",
   "main": "dist/ipriskify.cjs.js",
   "module": "dist/ipriskify.esm.js",
@@ -53,6 +53,7 @@
     "rollup-plugin-license": "^3.6.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "assets"
   ]
 }

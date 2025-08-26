@@ -1,6 +1,6 @@
 import "./polyfills";
 import { TelemetryPayload } from "./types";
-import { calculateVisitorIdInternal } from "./payload_handler";
+import { calculatefingerprintInternal } from "./payload_handler";
 import {
   TelemetryDataService,
   NetworkService,
@@ -35,8 +35,8 @@ export class TelemetryClient {
     try {
       const payload = await this.dataService.collectTelemetryData(32);
 
-      const visitorId = await calculateVisitorIdInternal(payload);
-      payload.visitorId = visitorId;
+      const fingerprint = await calculatefingerprintInternal(payload);
+      payload.fingerprint = fingerprint;
 
       return payload;
     } catch (error) {

@@ -9,6 +9,11 @@ export interface DimensionsMessage extends BaseDimensionsMessage {
   height: number;
 }
 
+export interface OptionalDimensionsMessage {
+  width?: number;
+  height?: number;
+}
+
 export interface FloatArrayMessage {
   values: number[];
 }

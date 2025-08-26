@@ -3,6 +3,7 @@ import {
   TimeFormatPreferenceId,
   SpeechApiStatusId,
   BrowserPermissionState,
+  PermissionState,
 } from "./enums";
 import {
   DimensionsMessage,
@@ -166,7 +167,9 @@ export interface BaseSpeechVoiceInfo {
   default?: boolean;
 }
 
-export interface SpeechVoiceInfo extends BaseSpeechVoiceInfo {}
+export interface SpeechVoiceInfo extends BaseSpeechVoiceInfo {
+  voiceURI?: string;
+}
 
 // Base permission status interface
 export interface BasePermissionStatusInfo {
@@ -174,11 +177,11 @@ export interface BasePermissionStatusInfo {
 }
 
 export interface PermissionStatusInfo extends BasePermissionStatusInfo {
-  state: BrowserPermissionState;
+  state: BrowserPermissionState | PermissionState;
 }
 
 export interface TelemetryPayload {
-  visitorId?: string;
+  fingerprint?: string;
   userAgent?: string;
   language?: string;
   platform?: string;
@@ -239,6 +242,7 @@ export interface TelemetryPayload {
   userAgentDataWow64?: boolean;
   endiannessByte?: number;
   incognitoDetected?: boolean;
+  ipqsDeviceId?: string;
 }
 
 export type PartialTelemetryData = Partial<TelemetryPayload>;

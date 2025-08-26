@@ -12,7 +12,7 @@ export class AutomationDetectionCollector extends BaseCollector<
 > {
   constructor() {
     super({
-  id: "automation-detection",
+      id: "automation-detection",
       category: CollectorCategory.SECURITY,
       priority: CollectorPriority.HIGH,
       timeout: 2000,

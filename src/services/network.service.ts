@@ -12,9 +12,7 @@ export interface TelemetryResponse {
 export class NetworkService {
   constructor(private config: TelemetryConfig) {}
 
-  async sendTelemetryData(
-    payload: TelemetryPayload,
-  ): Promise<null> {
+  async sendTelemetryData(payload: TelemetryPayload): Promise<null> {
     try {
       const serializedPayload = this.serializePayload(payload);
 
@@ -78,7 +76,6 @@ export class NetworkService {
       throw new Error(`Failed to serialize payload: ${error}`);
     }
   }
-
 
   private async parseResponse(response: Response): Promise<TelemetryResponse> {
     try {

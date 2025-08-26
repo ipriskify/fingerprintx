@@ -1,6 +1,6 @@
 import { TelemetryPayload } from "./types";
 import { sha256Hex } from "./utils/crypto";
-export function calculateVisitorIdInternal(
+export function calculatefingerprintInternal(
   data: TelemetryPayload,
 ): Promise<string> {
   return new Promise((resolve, reject) => {

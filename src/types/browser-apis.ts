@@ -1,6 +1,6 @@
 export interface NetworkInformation extends EventTarget {
   downlink?: number;
-  effectiveType?: string;
+  effectiveType?: "slow-2g" | "2g" | "3g" | "4g" | string;
   rtt?: number;
   saveData?: boolean;
   type?: string;
@@ -34,6 +34,7 @@ export interface UADataValues {
   brands?: UserAgentBrandVersion[];
   fullVersionList?: UserAgentBrandVersion[];
   wow64?: boolean;
+  bitness?: string;
 }
 
 export interface GPU {
@@ -53,6 +54,9 @@ export interface GPUAdapter {
   info?: GPUAdapterInfo;
   features?: GPUSupportedFeatures;
   limits?: GPUSupportedLimits;
+  readonly isFallbackAdapter?: boolean;
+  requestDeviceInfo?: () => Promise<GPUAdapterInfo>;
+  requestAdapterInfo?: () => Promise<GPUAdapterInfo>;
 }
 
 export interface GPUAdapterInfo {
@@ -65,3 +69,15 @@ export interface GPUAdapterInfo {
 export interface GPUSupportedFeatures extends ReadonlySet<string> {}
 
 export interface GPUSupportedLimits extends Record<string, number> {}
+
+export type MediaKeySystemConfiguration = any;
+export type MediaKeyCapability = any;
+export type MediaKeysRequirement = any;
+
+export interface MediaKeySystemAccess {
+  readonly keySystem: string;
+  getConfiguration(): MediaKeySystemConfiguration;
+  createMediaKeys(): Promise<MediaKeys>;
+}
+
+export interface MediaKeys {}

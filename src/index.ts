@@ -1,8 +1,3 @@
-export { TelemetryClient } from "./core";
-export * from "./types";
-export * from "./services";
-export * from "./utils";
-
 import { TelemetryClient } from "./core";
 import type { TelemetryConfig } from "./config";
 import type { TelemetryPayload } from "./types";
@@ -85,7 +80,11 @@ function parseBrowserFromUA(
   } else if (ua.includes("Firefox/")) {
     const mm = m(/Firefox\/([\d\.]+)/);
     Object.assign(result, { name: "Firefox" }, setVersion(mm?.[1]));
-  } else if (ua.includes("Chrome/") && !ua.includes("OPR/") && !ua.includes("Edg/")) {
+  } else if (
+    ua.includes("Chrome/") &&
+    !ua.includes("OPR/") &&
+    !ua.includes("Edg/")
+  ) {
     const mm = m(/Chrome\/([\d\.]+)/);
     // If engine hinted Brave, keep name Brave
     const name = engine === BrowserEngineId.BRAVE ? "Brave" : "Chrome";
@@ -101,7 +100,11 @@ function parseBrowserFromUA(
   return result;
 }
 
-function parseOSFromUA(ua: string): { os: string; os_version: string; device: string } {
+function parseOSFromUA(ua: string): {
+  os: string;
+  os_version: string;
+  device: string;
+} {
   let os = "Unknown";
   let os_version = "";
   let device = /Mobile|Android|iPhone|iPad|iPod/i.test(ua) ? "Mobile" : "Other";
@@ -178,11 +181,13 @@ export async function load(
         };
       }
       const ua = payload.userAgent || "";
-      const engine = payload.browserEngineSignature as BrowserEngineId | undefined;
+      const engine = payload.browserEngineSignature as
+        | BrowserEngineId
+        | undefined;
       const browser = parseBrowserFromUA(ua, engine);
       const os = parseOSFromUA(ua);
       const analysis: FingerprintAnalysis = {
-        fingerprint: payload.visitorId ?? "",
+        fingerprint: payload.fingerprint ?? "",
         browser: {
           name: browser.name,
           major_version: browser.major_version,
@@ -195,8 +200,8 @@ export async function load(
         incognito: payload.incognitoDetected === true,
         bot_detected: payload.automationInfo?.automationToolDetected === true,
       };
-  // Background post full JSON payload to telemetry unless disabled
-  postTelemetryIfEnabled(payload);
+      // Background post full JSON payload to telemetry unless disabled
+      postTelemetryIfEnabled(payload);
       return { analysis, fingerprint: payload };
     },
   };

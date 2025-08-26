@@ -186,7 +186,7 @@ export class SystemInfoCollector extends BaseCollector<
       };
 
       const nav = navigator as NavigatorExtended;
-      if (!nav.gpu) {
+      if (!nav.gpu || !nav.gpu.requestAdapter) {
         resolve(webgpuInfo);
         return;
       }
@@ -329,27 +329,31 @@ export class SystemInfoCollector extends BaseCollector<
           userAgentDataMobile: uaData.mobile,
         };
 
-        uaData
-          .getHighEntropyValues([
-            "architecture",
-            "bitness",
-            "model",
-            "platformVersion",
-            "fullVersionList",
-            "wow64",
-          ])
-          .then((highEntropyValues: UADataValues) => {
-            resolve({
-              ...result,
-              userAgentDataArchitecture: highEntropyValues.architecture,
-              userAgentDataBitness: highEntropyValues.bitness,
-              userAgentDataModel: highEntropyValues.model,
-              userAgentDataPlatformVersion: highEntropyValues.platformVersion,
-              userAgentDataFullVersionList: highEntropyValues.fullVersionList,
-              userAgentDataWow64: highEntropyValues.wow64,
-            });
-          })
-          .catch(() => resolve(result));
+        if (uaData.getHighEntropyValues) {
+          uaData
+            .getHighEntropyValues([
+              "architecture",
+              "bitness",
+              "model",
+              "platformVersion",
+              "fullVersionList",
+              "wow64",
+            ])
+            .then((highEntropyValues: UADataValues) => {
+              resolve({
+                ...result,
+                userAgentDataArchitecture: highEntropyValues.architecture,
+                userAgentDataBitness: highEntropyValues.bitness,
+                userAgentDataModel: highEntropyValues.model,
+                userAgentDataPlatformVersion: highEntropyValues.platformVersion,
+                userAgentDataFullVersionList: highEntropyValues.fullVersionList,
+                userAgentDataWow64: highEntropyValues.wow64,
+              });
+            })
+            .catch(() => resolve(result));
+        } else {
+          resolve(result);
+        }
       } else {
         resolve({});
       }
