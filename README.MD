@@ -36,9 +36,10 @@ We have a demo which allows you to see the library in action, visit https://demo
 
 Include the FingerprintX library in your HTML and initialize it:
 
-```js
-const ipRiskify = import('https://cdn.jsdelivr.net/npm/@ipriskify/fingerprintx/dist/ipriskify.min.js')
-    .then(IPRiskify => IPRiskify.load())
+```html
+<script src="https://cdn.jsdelivr.net/npm/@ipriskify/fingerprintx/dist/ipriskify.min.js"></script>
+<script>
+    IPRiskify.then(IPRiskify => IPRiskify.load())
 
   ipRiskify
     .then(fp => fp.get())
@@ -47,7 +48,7 @@ const ipRiskify = import('https://cdn.jsdelivr.net/npm/@ipriskify/fingerprintx/d
       console.log('Fingerprint result:', result)
 
     })
-  
+</script>
 ```
 
 
